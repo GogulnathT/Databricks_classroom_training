@@ -36,3 +36,23 @@ task_data = [{
 df = spark.createDataFrame(task_data)
 df.display()
 
+
+# COMMAND ----------
+
+df1 = df.withColumn('topping',explode('topping')).withColumn('topping_type',col("topping.type")).withColumn("topping_id",col("topping.id")).drop('topping')
+df1.display()
+
+# COMMAND ----------
+
+final_df = df1.withColumn('batter_type',col("batters.batter")).drop('batters')
+display(final_df)
+
+
+# COMMAND ----------
+
+donut_df = final_df.withColumn('batter_type',explode('batter_type')).withColumn("batter_id",col('batter_type.id')).withColumn('batter_type',col('batter_type.type'))
+donut_df.display()
+
+# COMMAND ----------
+
+donut_df.write.saveAsTable("donut_table")
