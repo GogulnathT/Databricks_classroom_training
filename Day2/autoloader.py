@@ -13,3 +13,7 @@ spark.readStream.format('cloudFiles').option("cloudFiles.format",'csv').option('
 
 # MAGIC %sql
 # MAGIC select * from training.bronze.autoloader
+
+# COMMAND ----------
+
+
